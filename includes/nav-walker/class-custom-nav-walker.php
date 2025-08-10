@@ -4,6 +4,13 @@ namespace Elementor_Addon_Pixl_Dynamics;
 
 class Custom_Nav_Walker extends \Walker_Nav_Menu
 {
+    protected $unique_id = '';
+
+    public function __construct($unique_id = '')
+    {
+        $this->unique_id = $unique_id;
+    }
+
     public function start_lvl(&$output, $depth = 0, $args = null)
     {
         $indent = str_repeat("\t", $depth);
@@ -49,44 +56,52 @@ class Custom_Nav_Walker extends \Walker_Nav_Menu
         $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
 
         $attributes = '';
+        $class_attr = '';
+
         foreach ($atts as $attr => $value) {
             if (! empty($value)) {
                 $value = ('href' === $attr) ? esc_url($value) : esc_attr($value);
-                $attributes .= ' ' . $attr . '="' . $value . '"';
+                if ($attr === 'class') {
+                    $class_attr = $value; // capture existing class value
+                } else {
+                    $attributes .= ' ' . $attr . '="' . $value . '"';
+                }
             }
         }
+
+        // Merge existing classes with top-level class
+        if ($depth === 0) {
+            $class_attr .= ' lf-double-line';
+        }
+
+        if (! empty($class_attr)) {
+            $attributes .= ' class="' . esc_attr(trim($class_attr)) . '"';
+        }
+
 
         $item_output = $args->before;
+
         $item_output .= '<a' . $attributes . '>';
         $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
+
         
+        // if ($has_children) {
+        //     $item_output .= '<span class="sub-arrow-mobile">&#9660;</span>';
+        // }
 
-        if ($has_children) {
-            $toggle_id = 'menu-toggle-' . $item->ID;
-            $item_output .= ' <label for="' . esc_attr($toggle_id) . '">';
-
-            if ($depth === 0) {
-                // Top-level: down arrow for mobile/tablet always, desktop only if switcher is "yes"
-                $item_output .= '<i class="fa fa-caret-down menu-arrow depth-0-arrow" data-depth="0" data-desktop="' . esc_attr($args->arrow_desktop) . '"></i>';
-            } else {
-                // Sub-level: only right arrow for desktop if switcher is "yes"
-                $item_output .= '<i class="fa fa-caret-right menu-arrow sub-arrow" data-depth="1" data-desktop="' . esc_attr($args->arrow_desktop) . '"></i>';
-
-                // Down arrow for mobile/tablet only — separate element
-                $item_output .= '<i class="fa fa-caret-down menu-arrow sub-arrow-mobile" data-depth="1"></i>';
-            }
-
-            $item_output .= '</label>';
-        }
 
         $item_output .= '</a>';
         $item_output .= $args->after;
 
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
 
+
         if ($has_children) {
-            $toggle_id = 'menu-toggle-' . $item->ID;
-            $output .= $indent . '<input type="checkbox" id="' . esc_attr($toggle_id) . '">';
+            $submenu_toggle_id = 'submenu-toggle-' . $item->ID . '-' . $this->unique_id;
+            // Submenu toggle input (checkbox)
+            $output .= '<input type="checkbox" id="' . esc_attr($submenu_toggle_id) . '" class="submenu-toggle" />';
+            // Submenu toggle label (arrow)
+            $output .= '<label for="' . esc_attr($submenu_toggle_id) . '" class="submenu-toggle-label"><span class="submenu-arrow">&#9660;</span></label>';
         }
     }
 

@@ -3,6 +3,46 @@
   display: none;
 }
 
+/* mobile menu hamburger.. */
+.lf-hamburger {
+    position: relative;
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+    /* display: flex; */
+    /* flex-direction: column;
+    justify-content: space-between; */
+    padding: 5px;
+    z-index: 1000;
+}
+
+.lf-hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #363636;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+/* mobile Transform into cross */
+/* .menu-toggle:checked+.lf-hamburger span:nth-child(1) {
+    transform: rotate(45deg);
+    position: absolute;
+    top: 10px;
+}
+
+.menu-toggle:checked+.lf-hamburger span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle:checked+.lf-hamburger span:nth-child(3) {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 10px;
+} */
+
+
 @media (max-width: 991px) {
   .small-screen-only {
     display: inline-block;
@@ -15,9 +55,6 @@
   }
 }
 
-.menu {
-  background: #035e8d;
-}
 .menu ul {
   margin: 0;
   padding: 0;
@@ -44,24 +81,6 @@
   cursor: pointer;
 }
 
-/* narrow styles */
-@media screen and (max-width: 1024px) {
-
-  .menu>ul,
-  .menu-righticon {
-    display: none;
-  }
-
-  input[type=checkbox]:checked+ul {
-    display: block;
-    -webkit-animation: grow 0.5s ease-in-out;
-    animation: grow 0.5s ease-in-out;
-  }
-  nav.menu ul>li a{
-  display: flex;
-  justify-content: space-between;
-}
-}
 
 /* large styles */
 @media screen and (min-width: 1025px) {
@@ -93,17 +112,13 @@
     justify-content: flex-end;
   }
 
-  /* THIS IS WHERE YOUR PADDING FOR LI TAG FOR TOP LEVEL GOES HERE */
-  .menu a {
-    padding: 15px 20px;
-  }
-
   .menu>ul>li {
-    display: inline-block;
+    display: flex;
   }
 
   .menu-hasdropdown {
     position: relative;
+    display: flex;
   }
 
   .menu-hasdropdown:hover>ul {
@@ -123,6 +138,7 @@
     left: 100%;
     top: 0;
   }
+
 
   .menu-hasflyout .menu-downicon {
     display: none;
@@ -171,17 +187,16 @@ body {
   line-height: 1.5;
 }
 
-.menu-dropdown a {
-  padding: 15px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.menu-dropdown {
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
+  border: 1px solid hsla(0, 0%, 100%, 0.4);
 }
 
 /* narrow  */
 @media screen and (max-width: 1024px) {
-  .menu>label {
-    display: block;
-    padding: 15px 20px;
-    text-align: right;
+
+  nav.menu {
+    padding: 10px !important;
   }
 
   .menu a {
@@ -194,6 +209,16 @@ body {
     background-color: rgba(92, 92, 92, 0.3);
   }
 
+
+  a.lf-double-line {
+    display: inline-block;
+    padding: 0;
+  }
+
+  .submenu-toggle-label,
+  a.menu-link {
+    display: inline-block;
+  }
 }
 
 @media screen and (min-width: 1025px) {
@@ -254,12 +279,17 @@ body {
     padding: 0 !important;
     box-sizing: border-box;
   }
-/* #menu-item-256 > a > label > i.fa.fa-caret-down.menu-arrow.sub-arrow-mobile */
+
+  /* #menu-item-256 > a > label > i.fa.fa-caret-down.menu-arrow.sub-arrow-mobile */
   i.fa.fa-caret-down {
     font-size: 2em !important;
   }
+
   .menu>ul>li>a>label>.fa-caret-down {
     font-size: 2em !important;
   }
-  
+
+  nav.menu>ul>li>a:hover {
+    color: inherit !important;
+  }
 }

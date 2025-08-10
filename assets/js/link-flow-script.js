@@ -29,3 +29,18 @@ window.addEventListener('resize', syncMenuArrows);
 
 const observer = new MutationObserver(syncMenuArrows);
 observer.observe(document.body, { childList: true, subtree: true });
+
+
+// script for double line hover animation...
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   const menuItems = document.querySelectorAll("nav.menu>ul > li");
+
+  //   menuItems.forEach(item => {
+  //     const hasSubmenu = item.querySelector("nav.menu>ul");
+  //     const link = item.querySelector("nav.menu>ul li a");
+
+  //     if (link && !hasSubmenu) {
+  //       link.classList.add("hover-effect");
+  //     }
+  //   });
+  // });
