@@ -274,7 +274,7 @@ class Elementor_Link_Flow_Widget extends Widget_Base
                     'isLinked' => true,
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} nav.menu ul>li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} nav.menu > ul > li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -368,7 +368,7 @@ class Elementor_Link_Flow_Widget extends Widget_Base
         $this->start_controls_section(
             'mobile_menu_label',
             [
-                'label' => __('Mobile Label Styles', 'plugin-name'),
+                'label' => __('Mobile Styles', 'plugin-name'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -435,6 +435,24 @@ class Elementor_Link_Flow_Widget extends Widget_Base
                     'size' => 25,
                 ],
             ]
+        );
+        $this->add_control('group_heading_hamburger_alignment', [
+            'label' => esc_html__('Align Mobile Menu Icon', 'plugin-name'),
+            'type' => \Elementor\Controls_Manager::HEADING,
+            'separator' => 'before',
+        ]);
+        $this->add_control(
+            'lf_mobile_menu_icon_alignment',
+            [
+                'label' => esc_html__('Mobile Menu Icon Alignment', 'plugin-name'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'options' => [
+                    'start' => esc_html__('Start', 'plugin-name'),
+                    'center' => esc_html__('Center', 'plugin-name'),
+                    'end' => esc_html__('End', 'plugin-name'),
+                ],
+                'default' => 'end',
+            ],
         );
         $this->end_controls_section();
     }

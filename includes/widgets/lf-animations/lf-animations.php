@@ -498,6 +498,8 @@ class Animations
         $unit   = $arrow_padding['unit'] ?? 'px';
         $padding_css = "{$top}{$unit} {$right}{$unit} {$bottom}{$unit} {$left}{$unit}";
 
+        $lf_mobile_menu_icon_alignment = $settings['lf_mobile_menu_icon_alignment'] ?? 'end';
+
     ?>
         <style>
             @media screen and (min-width: 1025px) {
@@ -508,6 +510,7 @@ class Animations
                     position: relative;
                     display: flex;
                     gap: 0px;
+                    justify-content: <?php echo esc_attr($lf_alignment); ?>;
                 }
 
                 nav.menu.<?php echo esc_attr($unique_class_css);
@@ -523,6 +526,11 @@ class Animations
                     position: relative;
                 }
 
+                nav.menu.<?php echo esc_attr($unique_class_css);
+
+                            ?>>ul>li ul li {
+                    padding: none !important;
+                }
 
 
                 nav.menu.<?php echo esc_attr($unique_class_css);
@@ -545,31 +553,36 @@ class Animations
                     display: none;
                 }
 
-                #<?php echo esc_attr($menu_id);
-
-                    ?>:checked+ul {
-                    display: block;
-                    -webkit-animation: grow 0.5s ease-in-out;
-                    animation: grow 0.5s ease-in-out;
+                #<?php echo esc_attr($menu_id); ?> {
+                    display: none;
                 }
 
-                
-                #<?php echo esc_attr($menu_id); ?>:checked+.nav-label span:nth-child(1) {
+                /* $lf_alignment */
+                #<?php echo esc_attr($menu_id); ?>:checked~.menu-align-<?php echo esc_attr($lf_alignment); ?> {
+                    display: block;
+                }
+
+                /* Hamburger transform */
+                #<?php echo esc_attr($menu_id); ?>:checked+.lf-hamburger span:nth-child(1) {
                     transform: rotate(45deg);
                     position: absolute;
                     top: 10px;
                 }
 
-                #<?php echo esc_attr($menu_id); ?>:checked+.nav-label span:nth-child(2) {
+                #<?php echo esc_attr($menu_id); ?>:checked+.lf-hamburger span:nth-child(2) {
                     opacity: 0;
                 }
 
-                #<?php echo esc_attr($menu_id); ?>:checked+.nav-label span:nth-child(3) {
+                #<?php echo esc_attr($menu_id); ?>:checked+.lf-hamburger span:nth-child(3) {
                     transform: rotate(-45deg);
                     position: absolute;
                     top: 10px;
                 }
 
+                .menu-align-center {
+                    display: flex;
+                    justify-content: center;
+                }
 
                 .submenu-toggle:checked~.menu-dropdown {
                     display: block;
@@ -609,6 +622,16 @@ class Animations
 
                 nav.menu.<?php echo esc_attr($unique_class_css);
 
+                            ?>>ul>li>label>span.submenu-arrow {}
+
+                nav.menu.<?php echo esc_attr($unique_class_css);
+
+                            ?>>ul>li>label>span.submenu-arrow:not(:checked)~.menu-dropdown {
+                    display: none;
+                }
+
+                nav.menu.<?php echo esc_attr($unique_class_css);
+
                             ?>>ul>li>ul {
                     width: 100%;
                 }
@@ -636,22 +659,14 @@ class Animations
                     float: right;
                 }
 
-                nav.menu>label.nav-label {
-                    /* background-color: red; */
+                /* nav.menu>label.nav-label {
                     display: flex;
                     align-items: end;
-
                     flex-direction: column;
                     justify-content: space-between;
-                }
-
-                /* nav.menu{
-                    display: flex;
-                    align-items: start;
-                    justify-content: start;
                 } */
 
-                nav.menu.<?php echo esc_attr($unique_class_css); ?>>ul>li>ul>li>label>span.submenu-arrow {
+                nav.menu.<?php echo esc_attr($unique_class_css); ?>>ul>li>ul li label>span.submenu-arrow {
                     float: right;
                     padding: <?= esc_attr($padding_css);
                                 ?>;
@@ -662,14 +677,27 @@ class Animations
 
                 }
 
-                nav.menu.<?php echo esc_attr($unique_class_css); ?>>ul>li ul li label span.submenu-arrow {
-                    padding: <?= esc_attr($padding_css);
-                                ?>;
-                    font-size: <?= esc_attr($settings['lf_arrow_size']['size'] . $settings['lf_arrow_size']['unit']);
-                                ?>;
-                    background-color: <?= esc_attr($settings['menu_link_arrow_label_bg_color']);
-                                        ?>;
+                /* Flip only the arrow next to the checked submenu */
+                .submenu-toggle:checked+.submenu-toggle-label .submenu-arrow {
+                    transform: rotate(180deg);
                 }
+
+                /* Hide dropdown unless its toggle is checked */
+                .submenu-toggle:not(:checked)>.menu-dropdown {
+                    display: none !important;
+                }
+
+                .menu <?php echo $unique_class; ?>>label {
+                    background: black;
+                    display: block;
+                    padding: 15px 20px;
+                    text-align: right;
+                }
+
+
+
+                
+
             }
         </style>
         <?php
@@ -677,12 +705,13 @@ class Animations
         ?>
         <!-- <i class="fa fa-bars"></i> -->
         <nav role='navigation' class="menu <?php echo $unique_class; ?>">
-            <label style="align-self: center;" for="<?php echo esc_attr($menu_id); ?>" class="nav-label lf-hamburger">
+
+            <input type="checkbox" id="<?php echo esc_attr($menu_id); ?>">
+            <label for="<?php echo esc_attr($menu_id); ?>" class="nav-label lf-hamburger label-<?php echo esc_attr($lf_mobile_menu_icon_alignment);?>">
                 <span></span>
                 <span></span>
                 <span></span>
             </label>
-            <input type="checkbox" id="<?php echo esc_attr($menu_id); ?>">
 
             <?php
             echo wp_nav_menu(array(

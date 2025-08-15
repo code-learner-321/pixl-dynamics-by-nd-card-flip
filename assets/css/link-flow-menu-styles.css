@@ -3,20 +3,40 @@
   display: none;
 }
 
-/* mobile menu hamburger.. */
+/* Hamburger icon */
 .lf-hamburger {
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  z-index: 1000;
+  background: transparent;
+  position: relative;
+}
+
+.lf-hamburger span {
+  height: 3px;
+  width: 100%;
+  background-color: #1e1e1e;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+
+/* mobile menu hamburger.. */
+/* .lf-hamburger {
     position: relative;
     width: 30px;
     height: 24px;
     cursor: pointer;
-    /* display: flex; */
-    /* flex-direction: column;
-    justify-content: space-between; */
     padding: 5px;
     z-index: 1000;
-}
+} */
 
-.lf-hamburger span {
+/* .lf-hamburger span {
     display: block;
     height: 3px;
     width: 100%;
@@ -24,7 +44,7 @@
     border-radius: 2px;
     transition: all 0.3s ease;
     transform-origin: center;
-}
+} */
 /* mobile Transform into cross */
 /* .menu-toggle:checked+.lf-hamburger span:nth-child(1) {
     transform: rotate(45deg);
@@ -105,7 +125,11 @@
   }
 
   .menu-align-center {
-    justify-content: center;
+    /* justify-content: center;
+    border-top: 1px solid #555; */
+    position: relative;
+    overflow: visible;
+    z-index: 2;
   }
 
   .menu-align-right {
@@ -218,6 +242,45 @@ body {
   .submenu-toggle-label,
   a.menu-link {
     display: inline-block;
+  }
+
+  /* Position label at start */
+  nav.menu.label-start .nav-label.lf-hamburger {
+    order: 0;
+    margin-right: auto;
+  }
+
+  /* Position label at center */
+  nav.menu.label-center {
+    justify-content: center;
+  }
+
+  nav.menu.label-center .nav-label.lf-hamburger {
+    order: 0;
+  }
+
+  /* Position label at end */
+  nav.menu.label-end .nav-label.lf-hamburger {
+    order: 1;
+    margin-left: auto;
+  }
+
+  /* Label at start */
+  .nav-label.lf-hamburger.label-start {
+    order: 0;
+    margin-right: auto;
+  }
+
+  /* Label at center */
+  .nav-label.lf-hamburger.label-center {
+    margin: 0 auto;
+    order: 0;
+  }
+
+  /* Label at end */
+  .nav-label.lf-hamburger.label-end {
+    order: 1;
+    margin-left: auto;
   }
 }
 
