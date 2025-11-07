@@ -222,7 +222,7 @@ class LfControls
             ]
         );
 
-        $widget_menu_background->add_control(
+        $widget_menu_background->add_responsive_control(
             'navbar_bg_color',
             [
                 'label' => esc_html__('Background Color', 'plugin-name'),
@@ -233,7 +233,7 @@ class LfControls
                 ],
             ]
         );
-        $widget_menu_background->add_control(
+        $widget_menu_background->add_responsive_control(
             'nav_txt_color',
             [
                 'label' => esc_html__('Text Color', 'plugin-name'),
