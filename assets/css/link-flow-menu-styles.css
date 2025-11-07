@@ -101,10 +101,6 @@ body {
   font-family: "Roboto" sans-serif;
   /* line-height: 1.5; */
 }
-.menu-dropdown {
-  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
-  border: 1px solid hsla(0, 0%, 100%, 0.4);
-}
 /* Always hide right arrow by default */
 .menu-righticon {
   display: none !important;
